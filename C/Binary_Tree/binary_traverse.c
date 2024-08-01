@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef int ElemType;
 
@@ -109,7 +110,7 @@ TreeNode* BuyNode(ElemType x){
     return node;
 }
 //创建一棵简易二叉树
-TreeNode* creatTeree(void){
+TreeNode* creatTree(void){
     TreeNode* node1 = BuyNode(1);
     TreeNode* node2 = BuyNode(2);
     TreeNode* node3 = BuyNode(3);
@@ -122,25 +123,25 @@ TreeNode* creatTeree(void){
     node2->left = node3;
     node2->right = node4;
     node4->left = node5;
-    node4->right = node6;
-    node5->right = node7;
+    node4->right = node7;
+    node5->right = node6;
 
     return node1;
 }
 
 //前序递归创建二叉树
-TreeNode* createBiTree(void){
+TreeNode* createBiTree_recru(void){
     int val;
     TreeNode* root;
     scanf("%d",&val);
-    if(val == "-1"){
+    if(val == -1){
         root = NULL;
     }else{
         TreeNode *root = (TreeNode*)malloc(sizeof(TreeNode));
         if(root == NULL)  exit(0);
         root->val = val;
-        root->left = createBiTree();
-        root->right = createBiTree();
+        root->left = createBiTree_recru();
+        root->right = createBiTree_recru();
     }
     return root;
 }
@@ -155,26 +156,26 @@ void freeTree(TreeNode* root) {
 }
 
 int main(){
-    printf("创建一个二叉树");
+    printf("创建一个二叉树:\n");
     TreeNode* root = creatTree();
     int arraySize = 0;
 
-    printf("前序遍历一个二叉树");
-    int* array1 = preorderTraversal(root, arraySize);
+    printf("前序遍历一个二叉树:\t");
+    int* array1 = preorderTraversal(root, &arraySize);
     for(int i = 0; i < arraySize; i++){
         printf("%d ", array1[i]);
     }
     printf("\n");
 
-    printf("中序遍历一个二叉树");
-    int* array2 = inorderTraversal(root, arraySize);
+    printf("中序遍历一个二叉树:\t");
+    int* array2 = inorderTraversal(root, &arraySize);
     for(int i = 0; i < arraySize; i++){
         printf("%d ", array2[i]);
     }
     printf("\n");
 
-    printf("后序遍历一个二叉树");
-    int* array3 = postorderTraversal(root, arraySize);
+    printf("后序遍历一个二叉树:\t");
+    int* array3 = postorderTraversal(root, &arraySize);
     for(int i = 0; i < arraySize; i++){
         printf("%d ", array3[i]);
     }
