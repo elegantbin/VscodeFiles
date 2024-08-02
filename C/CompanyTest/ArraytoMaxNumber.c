@@ -20,7 +20,7 @@ char* largestNumber(int* nums, int numsSize) {
 
     // 将排好序的nums拼接成一个字符串
     char* result = (char*)malloc(100 * sizeof(char));
-    strcpy(result, "");
+    strcpy(result, "");//使得result字符串数组中包含了结束字符’\0’, 保证 result 是一个空字符串。
     for (int i = 0; i < numsSize; i++) {
         char temp[20];
         sprintf(temp, "%d", nums[i]);
