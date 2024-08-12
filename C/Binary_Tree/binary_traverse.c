@@ -162,12 +162,12 @@ TreeNode* creatTree(void){
 //前序递归创建二叉树
 TreeNode* createBiTree_recru(void){
     int val;
-    TreeNode* root;
+    TreeNode* root = NULL;
     scanf("%d",&val);
     if(val == -1){
         root = NULL;
     }else{
-        TreeNode *root = (TreeNode*)malloc(sizeof(TreeNode));
+        root = (TreeNode*)malloc(sizeof(TreeNode));
         if(root == NULL)  exit(0);
         root->val = val;
         root->left = createBiTree_recru();

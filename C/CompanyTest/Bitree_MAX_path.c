@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <math.h>
 
 // Definition for a binary tree node.
 typedef struct TreeNode {
@@ -38,33 +39,33 @@ TreeNode* buildTree(int* preorder, int* index, int size) {
     return root;
 }
 
-// Helper function to find the maximum path sum in the binary tree
-int maxPathSumHelper(TreeNode* root, int* maxSum) {
-    if (root == NULL) return 0;
+//对于二叉树中的一个节点，该节点的最大路径和取决于该节点的值与该节点的左右子节点的最大贡献值
+// maxpath 是一个全局变量，这是可以工作的，但全局变量的使用在编程中通常需要小心，特别是在多线程环境中。
+// 全局变量会被整个程序共享，容易引发难以调试的错误。如果在同一程序中处理多个二叉树，可能会导致结果错误。
 
-    int leftMax = maxPathSumHelper(root->left, maxSum);
-    int rightMax = maxPathSumHelper(root->right, maxSum);
+int maxgain(struct TreeNode* root, int* maxpath){
+    if(root == NULL) return 0;
 
-    int currentMax = root->val;
-    if (leftMax > 0) currentMax += leftMax;
-    if (rightMax > 0) currentMax += rightMax;
-
-    if (currentMax > *maxSum) {
-        *maxSum = currentMax;
-    }
-
-    return root->val > root->val + (leftMax > 0 ? leftMax : 0) ? root->val : root->val + (leftMax > 0 ? leftMax : 0) > root->val + (rightMax > 0 ? rightMax : 0) ? root->val + (leftMax > 0 ? leftMax : 0) : root->val + (rightMax > 0 ? rightMax : 0);
+    //如果子节点的最大贡献值为正，则计入该节点的最大路径和，
+    //否则不计入该节点的最大路径和
+    int left_gain = fmax(maxgain(root->left, maxpath),0);
+    int right_gain = fmax(maxgain(root->right, maxpath),0);
+    // 节点的最大路径和取决于该节点的值与该节点的左右子节点的最大贡献值
+    int newpath = root->val + left_gain + right_gain;
+    //更新最大路径
+    *maxpath = fmax(newpath, *maxpath);
+    //返回节点的最大贡献值
+    return root->val + fmax(left_gain, right_gain);
 }
 
-// Main function to find the maximum path sum
-int maxPathSum(TreeNode* root) {
-    int maxSum = INT_MIN;
-    maxPathSumHelper(root, &maxSum);
-    return maxSum;
+int maxPathSum(struct TreeNode* root) {
+    int maxpath = INT_MIN;
+    maxgain(root, &maxpath);
+    return maxpath;
 }
 
 int main() {
-    int preorder[] = {1, 2, 4, -1, -1, 5, -1, -1, 3, -1, -1}; // -1 represents NULL
+    int preorder[] = {0}; // -1 represents NULL
     int size = sizeof(preorder) / sizeof(preorder[0]);
     int index = 0;
 
