@@ -187,7 +187,8 @@ void freeTree(TreeNode* root) {
 
 int main(){
     printf("创建一个二叉树:\n");
-    TreeNode* root = creatTree();
+    // TreeNode* root = creatTree();
+    TreeNode* root = createBiTree_recru();
     int arraySize = 0;
     int* arrayColumSize = 0;
 
