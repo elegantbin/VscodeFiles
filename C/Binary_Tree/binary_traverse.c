@@ -53,7 +53,6 @@ ElemType* inorderTraversal(struct TreeNode* root, int* returnSize) {
     int top = 0;
     struct TreeNode *stk[2000];
     struct TreeNode *p = root;
-    if(p == NULL) return res;
     
     while(p != NULL || top>0){
         if(p){
@@ -178,11 +177,11 @@ TreeNode* createBiTree_recru(void){
 
 //后序遍历释放二叉树节点内存
 void freeTree(TreeNode* root) {
-    if (root != NULL) {
-        freeTree(root->left);
-        freeTree(root->right);
-        free(root);
-    }
+    if (root = NULL) return;
+    
+    freeTree(root->left);
+    freeTree(root->right);
+    free(root);
 }
 
 int main(){
