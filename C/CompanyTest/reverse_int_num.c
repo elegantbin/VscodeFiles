@@ -11,8 +11,6 @@
 
 int reverse(int x) {
     int reversed = 0;
-    int sign = (x < 0) ? -1 : 1;
-    x = x * sign; // Work with positive version of x
 
     while (x != 0) {
         int digit = x % 10;
@@ -26,7 +24,7 @@ int reverse(int x) {
         reversed = reversed * 10 + digit;
     }
 
-    return reversed * sign; // Restore the sign to the reversed number
+    return reversed; // Restore the sign to the reversed number
 }
 
 int main() {

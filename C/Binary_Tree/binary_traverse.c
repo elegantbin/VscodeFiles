@@ -79,20 +79,20 @@ ElemType* postorderTraversal(struct TreeNode* root, int* returnSize) {
     Node *cur = root;
     Node *pre = NULL;
     while(cur || top > 0){
-        while(cur != NULL){
+        while(cur != NULL){//节点不为空的话一直入栈，遍历左节点
             stack[top++] = cur;
             cur = cur->left;
         }
 
-        cur = stack[--top];
+        cur = stack[--top];//如果节点是空的，出栈
 
         if(cur->right == NULL || cur->right == pre){
             array[(*returnSize)++] = cur->val;
-            pre = cur;
+            pre = cur;//做个标记，表示这个节点已经被访问过了
             cur = NULL;
         }
         else{
-            stack[top++] = cur;
+            stack[top++] = cur;//重新入栈
             cur = cur->right;
         }
     }
